@@ -86,7 +86,7 @@ pip install evil-winrm-py[kerberos,mcp] # to install both optional dependencies
 or if you want to install with latest commit from the main branch you can do so by cloning the repository and installing it with `pip`/`uv`/`pipx`:
 
 ```bash
-git clone https://github.com/adityatelange/evil-winrm-py
+git clone https://github.com/arut-plus/winrm
 cd evil-winrm-py
 pip install .
 # or use: pip install .[kerberos,mcp] to install both optional dependencies
