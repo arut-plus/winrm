@@ -63,8 +63,8 @@ from evil_winrm_py import __version__
 from evil_winrm_py.pypsrp_ewp.wsman import WSManEWP
 
 # --- Constants ---
-LOG_PATH = Path.cwd().joinpath("evil_winrm_py.log")
-HISTORY_FILE = Path.home().joinpath(".evil_winrm_py_history")
+LOG_PATH = Path.cwd().joinpath("winrm.log")
+HISTORY_FILE = Path.home().joinpath(".winrm_history")
 HISTORY_LENGTH = 1000
 MENU_COMMANDS = {
     "services": {
@@ -341,12 +341,12 @@ def get_prompt(r_pool: RunspacePool) -> str:
         # A JEA session offers no reliable way to read the working directory:
         # $pwd.Path is a property expression (blocked in NoLanguage mode)
         # use a static prompt.
-        return f"{RED}evil-winrm-py{RESET} {YELLOW}{BOLD}PS{RESET} (JEA)> "
+        return f"{RED}winrm{RESET} {YELLOW}{BOLD}PS{RESET} (JEA)> "
     output, streams, had_errors = run_ps_cmd(
         r_pool, "$pwd.Path"
     )  # Get current working directory
     if not had_errors:
-        return f"{RED}evil-winrm-py{RESET} {YELLOW}{BOLD}PS{RESET} {output}> "
+        return f"{RED}winrm{RESET} {YELLOW}{BOLD}PS{RESET} {output}> "
     return "PS ?> "  # Fallback prompt
 
 
@@ -960,7 +960,7 @@ def download_file(r_pool: RunspacePool, remote_path: str, local_path: str) -> No
     ps.begin_invoke()
 
     ts = int(time.time())
-    tmp_file_path = Path(tempfile.gettempdir()) / f"evil-winrm-py.file_{ts}.tmp"
+    tmp_file_path = Path(tempfile.gettempdir()) / f"winrm.file_{ts}.tmp"
 
     try:
         # Create a temporary file to store the downloaded data
@@ -1678,14 +1678,9 @@ def interactive_shell(r_pool: RunspacePool) -> None:
 
 # --- Main Function ---
 def main():
-    print("""          _ _            _                             
-  _____ _(_| |_____ __ _(_)_ _  _ _ _ __ ___ _ __ _  _ 
- / -_\\ V | | |___\\ V  V | | ' \\| '_| '  |___| '_ | || |
- \\___|\\_/|_|_|    \\_/\\_/|_|_||_|_| |_|_|_|  | .__/\\_, |
-                                            |_|   |__/  v{}\n""".format(__version__))
+    print("\n  winrm  v{}\n".format(__version__))
     parser = argparse.ArgumentParser(
-        epilog="For more information about this project, visit https://github.com/adityatelange/evil-winrm-py"
-        "\nFor user guide, visit https://github.com/adityatelange/evil-winrm-py/blob/main/docs/usage.md",
+        prog="winrm",
         formatter_class=argparse.RawTextHelpFormatter,
     )
 
